@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.groupChat:
+                Intent intent2 = new Intent (MainActivity.this, GroupChatActivity.class);
+                startActivity(intent2);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
