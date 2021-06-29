@@ -1,15 +1,24 @@
 package com.example.whatsapp.Models;
 
 public class Users {
-    String profilepic, userName, mail, password, userID, lastMessage;
+    String profilepic, userName, mail, password, userID, lastMessage, about;
 
-    public Users(String profilepic, String userName, String mail, String password, String userID, String lastMessage) {
+    public Users(String profilepic, String userName, String mail, String password, String userID, String lastMessage, String about) {
         this.profilepic = profilepic;
         this.userName = userName;
         this.mail = mail;
         this.password = password;
         this.userID = userID;
         this.lastMessage = lastMessage;
+        this.about = about;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     public Users () {

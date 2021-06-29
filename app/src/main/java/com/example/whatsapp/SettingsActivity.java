@@ -23,6 +23,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
 public class SettingsActivity extends AppCompatActivity {
 
     ActivitySettingsBinding binding;
@@ -50,6 +52,24 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        binding.saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String about = binding.etStatus.getText().toString();
+                String username = binding.etUserName1.getText().toString();
+
+                HashMap<String , Object> obj = new HashMap<>();
+                obj.put("userName", username);
+                obj.put("about" , about );
+
+                database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                        .updateChildren(obj);
+                Toast.makeText(SettingsActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(SettingsActivity.this, MainActivity.class);
+                startActivity(intent1);
+            }
+        });
+
         database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -59,6 +79,11 @@ public class SettingsActivity extends AppCompatActivity {
                                 .load(users.getProfilepic())
                                 .placeholder(R.drawable.ic_user__1_)
                                 .into(binding.profileImage);
+
+
+                        binding.etStatus.setText(users.getAbout());
+                        binding.etUserName1.setText(users.getUserName());
+
                     }
 
                     @Override
