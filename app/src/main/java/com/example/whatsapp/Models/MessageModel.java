@@ -2,7 +2,7 @@ package com.example.whatsapp.Models;
 
 public class MessageModel {
 
-    String uId, message, messageId;
+    String uId, message, messageId, senderprofilePic;
     Long timestamp;
 
     public MessageModel(String uId, String message, Long timestamp, String messageId) {
@@ -17,7 +17,22 @@ public class MessageModel {
         this.message = message;
     }
 
+
+    public MessageModel(String uId, String message, String senderprofilePic) {
+        this.uId = uId;
+        this.message = message;
+        this.senderprofilePic = senderprofilePic;
+    }
+
     public MessageModel() {
+    }
+
+    public String getSenderprofilePicc() {
+        return senderprofilePic;
+    }
+
+    public void setSenderprofilePic(String senderprofilePic) {
+        this.senderprofilePic = senderprofilePic;
     }
 
     public String getMessageId() {

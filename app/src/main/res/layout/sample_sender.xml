@@ -36,8 +36,8 @@
 
             android:layout_marginBottom="3dp"
             android:inputType="textLongMessage|textMultiLine"
-            android:maxWidth="270dp"
-            android:minWidth="50dp"
+            android:maxWidth="230dp"
+            android:minWidth="70dp"
             android:text="ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
             app:layout_constraintBottom_toTopOf="@+id/senderTime"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"

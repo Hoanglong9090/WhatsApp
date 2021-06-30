@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.example.whatsapp.Adapters.ChatAdapter;
 import com.example.whatsapp.Models.MessageModel;
+import com.example.whatsapp.Models.Users;
 import com.example.whatsapp.databinding.ActivityChatDetailBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,6 +48,8 @@ public class ChatDetailActivity extends AppCompatActivity {
         String userName = getIntent().getStringExtra("userName");
         String profilePic = getIntent().getStringExtra("profilePic");
 
+
+
         binding.userName.setText(userName);
         Picasso.get().load(profilePic).placeholder(R.drawable.ic_user__1_).into(binding.profileImage);
 
@@ -78,6 +81,20 @@ public class ChatDetailActivity extends AppCompatActivity {
                         for (DataSnapshot snapshot1 : snapshot.getChildren()){
                             MessageModel messageModel = snapshot1.getValue(MessageModel.class);
                             messageModel.setMessageId(snapshot1.getKey());
+
+                            database.getReference().child("Users").child(receiverId)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull  DataSnapshot snapshot) {
+                                            Users users = snapshot.getValue(Users.class);
+                                            messageModel.setSenderprofilePic(users.getProfilepic());
+                                        }
+                                        @Override
+                                        public void onCancelled(@NonNull  DatabaseError error) {
+
+                                        }
+                                    });
+
                             messageModels.add(messageModel);
                         }
                         chatAdapter.notifyDataSetChanged();
@@ -90,10 +107,13 @@ public class ChatDetailActivity extends AppCompatActivity {
                     }
                 });
 
+
+
         binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String message = binding.etMessage.getText().toString();
+
                 final MessageModel model = new MessageModel(senderID, message);
                 model.setTimestamp(new Date().getTime());
                 binding.etMessage.setText("");

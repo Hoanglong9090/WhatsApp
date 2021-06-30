@@ -6,15 +6,19 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentContainer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.whatsapp.Models.MessageModel;
+import com.example.whatsapp.Models.Users;
 import com.example.whatsapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +27,7 @@ import java.util.Date;
 public class ChatAdapter extends RecyclerView.Adapter {
 
     ArrayList<MessageModel> messageModels;
+    ArrayList<Users> users;
     Context context;
     String receiverID;
 
@@ -69,6 +74,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd HH:mm");
         MessageModel messageModel = messageModels.get(position);
 
+
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -103,9 +109,12 @@ public class ChatAdapter extends RecyclerView.Adapter {
         if (holder.getClass() == SenderViewHolder.class){
             ((SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());
             ((SenderViewHolder)holder).senderTime.setText(sdf.format(new Date(messageModel.getTimestamp())));
+
+
         } else {
             ((ReceiverViewHolder)holder).receiverMsg.setText(messageModel.getMessage());
             ((ReceiverViewHolder)holder).receiverTime.setText(sdf.format(new Date(messageModel.getTimestamp())));
+            Picasso.get().load(messageModel.getSenderprofilePicc()).placeholder(R.drawable.ic_user__1_).into((ImageView) ((ReceiverViewHolder)holder).profileimage);
         }
     }
 
@@ -117,11 +126,13 @@ public class ChatAdapter extends RecyclerView.Adapter {
     public class ReceiverViewHolder extends RecyclerView.ViewHolder {
 
         TextView receiverMsg, receiverTime;
+        View profileimage;
 
         public ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
             receiverMsg = itemView.findViewById(R.id.receiverText);
             receiverTime = itemView.findViewById(R.id.receiverTime);
+            profileimage = itemView.findViewById(R.id.profile_image);
         }
     }
 
