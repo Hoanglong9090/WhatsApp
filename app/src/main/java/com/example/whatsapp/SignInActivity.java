@@ -47,7 +47,7 @@ public class SignInActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         progressDialog = new ProgressDialog(SignInActivity.this);
         progressDialog.setTitle("Login");
-        progressDialog.setMessage("Login to your account");
+        progressDialog.setMessage("Login to your Accout");
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
